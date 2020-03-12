@@ -2,7 +2,7 @@ from fastai.vision import models, URLs, ImageDataBunch, cnn_learner, untar_data,
 import os, sys
 from cv2 import cv2
 import shutil
-import time
+import time, datetime
 
 def list_dir(file_dir, file_list):
     dir_list = os.listdir(file_dir)
@@ -27,19 +27,26 @@ def main():
     file_list = []
     result_name = []
     nCount = 1
+    ntime_count = 0
     result_dir = 'E:\\TestAll'
     list_dir(file_dir, file_list)
     #逐一分类与储存
     for img_file in file_list:
         img = open_image(img_file)
         cv_image = cv2.imread(img_file)
+        time_start = datetime.datetime.now()
         pred_class, pred_index, pred_rate = learn.predict(img) #预测图片
+        time_end = datetime.datetime.now()
+        time_use = (time_end - time_start).microseconds / 1000
+        ntime_count = ntime_count + time_use
         result_name = result_dir + '\\' + str(pred_class) + '\\' + str(nCount) + '.bmp'
         dir_path = result_dir + '\\' + str(pred_class)
         if not(os.path.isdir(dir_path)):
             os.mkdir(dir_path)
-        cv2.imwrite(result_name, cv_image)
+        if not(cv_image is None):
+            cv2.imwrite(result_name, cv_image)
         nCount = nCount + 1
+    time_averg = ntime_count / nCount
     print("end")
 
 if __name__ == '__main__':
