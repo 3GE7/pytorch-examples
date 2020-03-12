@@ -1,4 +1,4 @@
-from fastai.vision import models, URLs, ImageDataBunch, cnn_learner, untar_data, accuracy, get_transforms, load_learner
+from fastai.vision import models, URLs, ImageDataBunch, cnn_learner, untar_data, accuracy, get_transforms, load_learner, open_image
 import os, sys
 
 def list_dir(file_dir, file_list):
@@ -14,19 +14,16 @@ def list_dir(file_dir, file_list):
     print("end")
 
 def main():
-    
-    #path = 'E:\\Git\\pytorch-examples\\test\\test1\\Data'
-    #tfms = get_transforms(do_flip=False)
-    #data = ImageDataBunch.from_folder(path, ds_tfms=tfms, size=64)
-    #learn = cnn_learner(data, models.resnet18, metrics=accuracy)  # 构建cnn模型，使用resnet18预训练模型
-    #learn.fit(1)
-    #learn.export('E:\\Git\\pytorch-examples\\test\\test1\\net.pkl')
     file_dir = 'E:\\Git\\pytorch-examples\\test\\test1\\Data\\valid'
     net_file = 'E:\\Git\\pytorch-examples\\test\\test1'
-    learn1 = load_learner(net_file)
+    learn = load_learner(net_file, 'net.pkl')
     file_list = []
     list_dir(file_dir, file_list)
-    print('end')
- 
+    for img_file in file_list:
+        img = open_image(img_file)
+        pred_class,pred_idx,outputs = learn.predict(img) #预测图片
+        print(pred_class) #输出类别
+        print(outputs) #输出每个类的概率
+
 if __name__ == '__main__':
     main()
