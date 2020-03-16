@@ -23,7 +23,7 @@ def main():
     #读取分类样本和网络
     file_dir = 'E:\\Data\\valid'
     net_file = 'E:\\Data'
-    learn = load_learner(net_file, 'net.pkl')
+    learn = load_learner(net_file, 'net.onnx')
     file_list = []
     result_name = []
     nCount = 1
