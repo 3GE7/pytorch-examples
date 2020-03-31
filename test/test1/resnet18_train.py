@@ -6,7 +6,7 @@ import torch
 def main():
     
     path = 'E:\\Data'
-    tfms = get_transforms(do_flip=False)
+    tfms = get_transforms(do_flip=False,)
     data = ImageDataBunch.from_folder(path, ds_tfms=tfms, size=64)
     net_file = 'E:\\Data'
     if os.path.isfile('E:\\Data\\net.pkl'):
